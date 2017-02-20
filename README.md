@@ -106,6 +106,6 @@ The below example will sign **server.csr** against the **dcano1.ca.local** serve
 `certsrv.py --hostname dcano1.ca.local --csr /root/server.csr --crt /root/server.crt`
 
 ### Compiling
-Making a binary is an extremely simple process with py2exe. Simply run the following in the root directory.
+Making a binary is an extremely simple process with pyInstaller. Simply run the following in the root directory.
 
-`python3 setup.py py2exe`
+`pyinstaller.exe --onefile .\certsrv.py`

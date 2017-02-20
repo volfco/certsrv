@@ -108,7 +108,7 @@ def get_ca_cert(server, username, password, encoding='b64', auth=None):
 	cert = urllib2.urlopen(cert_req).read()
 	return cert
 
-def get_chain(server, encoding='bin'):
+def get_chain(server, encoding='b64', auth=None):
 	"""
 	Gets the chain from a Microsoft AD Certificate Services web page.
 
@@ -205,7 +205,7 @@ if __name__ == "__main__":
 
 	if args.include_chain:
 		chain = get_chain(BaseURL, encoding='b64', auth=auth)
-		CSR += chain
+		CRT += chain
 
 	crtfh = open(args.crt, 'w')
 	crtfh.write(CRT)

@@ -6,12 +6,14 @@ It is quite normal to have an internal PKI based on the Microsoft AD Certificate
 Users of other OSes must often manually create an CSR and then use the Certificate Services web page (certsrv) to get a certificate.
 This is not ideal, as it is a manual and time consuming (and creating a csr with OpenSSL on the command line is confusing and complicated.)
 
-This is a simple litle Python client for the certsrv page, so that Python programs can get certificates without manual operation.
+This is a simple litle Python client for the certsrv page, so that Python programs can get certificates without manual operation. This client also can be invoked as a standalone program.
 
 ## Prerequisites
 The IIS server running the certsrv utility must have Basic Authentication enabled, and it MUST listen on HTTPS with a valid certificate.
 
 It is known to work on Windows 2008R2 and 2012R2, but I'm sure it works on everything from 2003 to 2016.
+
+You must be using **Python 3.4**. Python 3 introduced breaking changes to `urllib`, so this program is not backwards compatible. 
 
 ## Disclaimer
 The certsrv page is not an API, so this is obviously a little hackish and a little fragile. It will break if Microsoft does any changes to the certsrv application.
@@ -94,3 +96,13 @@ pem_key = OpenSSL.crypto.dump_privatekey(OpenSSL.crypto.FILETYPE_PEM, key)
 print('Cert: %s' % pem_cert)
 print('Key: %s' % pem_key)
 ```
+
+## Command Line usage
+In cases where you are interacting with external programs that generate CSRs that have to be manually signed, you can use this program
+as a standalone program.
+
+### Simple
+The below example will sign **server.csr** against the **dcano1.ca.local** server and put the signed certificate into **server.crt**
+`certsrv.py --hostname dcano1.ca.local --csr /root/server.csr --crt /root/server.crt`
+
+### Compiling
